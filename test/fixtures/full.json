@@ -1,0 +1,52 @@
+{
+  "cwd": "/Users/shusuke/rep/github.com/ganzinn/claude-statusline",
+  "session_id": "test-session-full",
+  "transcript_path": "/tmp/transcript.jsonl",
+  "model": {
+    "id": "claude-fable-5",
+    "display_name": "Fable 5"
+  },
+  "workspace": {
+    "current_dir": "/Users/shusuke/rep/github.com/ganzinn/claude-statusline",
+    "project_dir": "/Users/shusuke/rep/github.com/ganzinn/claude-statusline",
+    "added_dirs": [],
+    "repo": {
+      "host": "github.com",
+      "owner": "ganzinn",
+      "name": "claude-statusline"
+    }
+  },
+  "version": "2.1.90",
+  "output_style": { "name": "default" },
+  "cost": {
+    "total_cost_usd": 1.2345,
+    "total_duration_ms": 2700000,
+    "total_api_duration_ms": 150000,
+    "total_lines_added": 156,
+    "total_lines_removed": 23
+  },
+  "context_window": {
+    "total_input_tokens": 120000,
+    "total_output_tokens": 8000,
+    "context_window_size": 200000,
+    "used_percentage": 60,
+    "remaining_percentage": 40,
+    "current_usage": {
+      "input_tokens": 8500,
+      "output_tokens": 8000,
+      "cache_creation_input_tokens": 5000,
+      "cache_read_input_tokens": 106500
+    }
+  },
+  "effort": { "level": "max" },
+  "thinking": { "enabled": true },
+  "rate_limits": {
+    "five_hour": { "used_percentage": 23.5, "resets_at": 1783875600 },
+    "seven_day": { "used_percentage": 81.2, "resets_at": 1784307600 }
+  },
+  "pr": {
+    "number": 42,
+    "url": "https://github.com/ganzinn/claude-statusline/pull/42",
+    "review_state": "pending"
+  }
+}

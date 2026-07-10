@@ -1,0 +1,27 @@
+{
+  "cwd": "/private/tmp",
+  "session_id": "test-session-nogit",
+  "model": {
+    "id": "claude-opus-4-8",
+    "display_name": "Opus"
+  },
+  "workspace": {
+    "current_dir": "/private/tmp",
+    "project_dir": "/private/tmp",
+    "added_dirs": []
+  },
+  "cost": {
+    "total_cost_usd": 0.05,
+    "total_duration_ms": 65000,
+    "total_api_duration_ms": 12000,
+    "total_lines_added": 0,
+    "total_lines_removed": 0
+  },
+  "context_window": {
+    "total_input_tokens": 15000,
+    "total_output_tokens": 1200,
+    "context_window_size": 200000,
+    "used_percentage": 92,
+    "remaining_percentage": 8
+  }
+}
