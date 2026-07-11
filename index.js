@@ -76,8 +76,16 @@ function readGitInfo(dir, sessionId) {
   const info = { branch: '', dirty: false };
   try {
     const opts = { encoding: 'utf8', stdio: ['pipe', 'pipe', 'ignore'], timeout: 2000 };
-    info.branch = execSync(`git -C "${dir}" branch --show-current`, opts).trim();
-    info.dirty = execSync(`git -C "${dir}" status --porcelain -unormal`, opts).trim().length > 0;
+    // -b 付きの1コマンドでブランチ名(1行目の "## ...")と dirty 判定(2行目以降)をまとめて取る
+    const lines = execSync(`git -C "${dir}" status --porcelain -b -unormal`, opts).split('\n');
+    if (lines[0]?.startsWith('## ')) {
+      const head = lines[0].slice(3);
+      if (!head.startsWith('HEAD ')) {
+        // "main...origin/main [ahead 1]" / "No commits yet on main" / detached は "HEAD (no branch)"
+        info.branch = head.split('...')[0].replace(/^No commits yet on /, '');
+      }
+    }
+    info.dirty = lines.slice(1).some((l) => l.trim().length > 0);
   } catch {}
 
   try {
@@ -112,7 +120,8 @@ function buildLocationSegment(data) {
   if (worktree) parts.push(`${DIM}[wt:${worktree}]${RESET}`);
 
   if (data.pr?.number) {
-    parts.push(link(data.pr.url, `#${data.pr.number}`));
+    const label = `#${data.pr.number}`;
+    parts.push(`${CYAN}${data.pr.url ? link(data.pr.url, label) : label}${RESET}`);
   }
 
   const added = data.cost?.total_lines_added || 0;
@@ -135,12 +144,10 @@ function buildContextSegment(data) {
   const cw = data.context_window;
   const pct = Math.floor(cw?.used_percentage ?? 0);
   const color = pctColor(pct, 70, 90);
-  const filled = Math.min(10, Math.floor(pct / 10));
-  const bar = '█'.repeat(filled) + '░'.repeat(10 - filled);
   const usage = cw?.total_input_tokens != null && cw?.context_window_size
-    ? ` ${DIM}${formatTokens(cw.total_input_tokens)}/${formatTokens(cw.context_window_size)}${RESET}`
+    ? `${formatTokens(cw.total_input_tokens)}/${formatTokens(cw.context_window_size)} `
     : '';
-  return `${color}${bar}${RESET}${usage} ${pct}%`;
+  return `${usage}${color}${DIM}${pct}%${RESET}`;
 }
 
 function buildSessionSegment(data) {
